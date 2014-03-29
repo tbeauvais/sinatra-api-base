@@ -18,6 +18,15 @@ configure do
 end
 
 get '/' do
+   data = []
+   t1 = Time.now
    $redis.set("foo", "bar")
-  'Hello world! ' + $redis.get('foo')
+   t2 = Time.now
+   $redis.get('foo')
+   t3 = Time.now
+   data << 'write'
+   data << t2-t1
+   data << 'read'
+   data << t3-t2
+  'Hello world! ' + data.to_s
 end
